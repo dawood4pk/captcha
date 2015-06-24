@@ -27,6 +27,11 @@ MDB.CAPTCHA.Constants = {
 };
 
 MDB.CAPTCHA.Variables.errorText = '';
+MDB.CAPTCHA.Variables.captchaForm = document.getElementById( MDB.CAPTCHA.Constants.CAPTCHA_FORM_ATTRIBUTE_ID );
+MDB.CAPTCHA.Variables.captchaSpan = document.getElementById( MDB.CAPTCHA.Constants.SPAN_CAPTCHA_ATTRIBUTE_ID );
+MDB.CAPTCHA.Variables.captchaText = document.getElementById( MDB.CAPTCHA.Constants.TEXT_INPUT_ATTRIBUTE_ID );
+MDB.CAPTCHA.Variables.captchaRefresh = document.getElementById( MDB.CAPTCHA.Constants.BUTTON_REFRESH_ATTRIBUTE_ID );
+MDB.CAPTCHA.Variables.captchaErrorSpan = document.getElementById( MDB.CAPTCHA.Constants.SPAN_ERROR_ATTRIBUTE_ID );
 
 //////////////////////////////////////////////////////////////////////
 //function: MDB.CAPTCHA.init.                                        //
@@ -42,7 +47,7 @@ MDB.CAPTCHA.init = function() {
 MDB.CAPTCHA.Functions.generatesCaptcha = function(length) {
 	//Generates the captcha function
 	MDB.CAPTCHA.Variables.captchaCode = Math.floor( Math.pow( 10, length-1 ) + Math.random() * 9 * Math.pow( 10, length-1 ) ).toString();
-	document.getElementById( MDB.CAPTCHA.Constants.SPAN_CAPTCHA_ATTRIBUTE_ID ).innerHTML = MDB.CAPTCHA.Variables.captchaCode;
+	MDB.CAPTCHA.Variables.captchaSpan.innerHTML = MDB.CAPTCHA.Variables.captchaCode;
 }; // End of generatesCaptcha.
 
 //////////////////////////////////////////////////////////////////////
@@ -52,24 +57,23 @@ MDB.CAPTCHA.Functions.registerCaptchaEvents = function() {
 
 	////////////////////////
 	// On Form Submit
-	document.getElementById( MDB.CAPTCHA.Constants.CAPTCHA_FORM_ATTRIBUTE_ID ).onsubmit = function(){
+	MDB.CAPTCHA.Variables.captchaForm.onsubmit = function(){
 		return MDB.CAPTCHA.Functions.validateForm( this );
 	};
 	////////////////////////
 
 	////////////////////////
 	// On Captcha Key Up.
-	document.getElementById( MDB.CAPTCHA.Constants.TEXT_INPUT_ATTRIBUTE_ID ).onkeyup = function(){
-
-		MDB.CAPTCHA.Functions.validateForm( document.getElementById( MDB.CAPTCHA.Constants.CAPTCHA_FORM_ATTRIBUTE_ID ) );
+	MDB.CAPTCHA.Variables.captchaText.onkeyup = function(){
+		MDB.CAPTCHA.Functions.validateForm( MDB.CAPTCHA.Variables.captchaForm );
 	};
 	////////////////////////
 
 	////////////////////////
 	//On Click Refresh Button.
-	document.getElementById( MDB.CAPTCHA.Constants.BUTTON_REFRESH_ATTRIBUTE_ID ).onclick = function(){
+	MDB.CAPTCHA.Variables.captchaRefresh.onclick = function(){
 		MDB.CAPTCHA.Functions.generatesCaptcha( MDB.CAPTCHA.Constants.CAPTCHA_LENGTH );
-		MDB.CAPTCHA.Functions.validateForm( document.getElementById( MDB.CAPTCHA.Constants.CAPTCHA_FORM_ATTRIBUTE_ID ) );
+		MDB.CAPTCHA.Functions.validateForm( MDB.CAPTCHA.Variables.captchaForm );
 	};
 	////////////////////////
 
@@ -99,16 +103,16 @@ MDB.CAPTCHA.Functions.validateForm = function(captchaForm) {
 
 	if( MDB.CAPTCHA.Variables.errorText !== '' )
 	{
-		document.getElementById( MDB.CAPTCHA.Constants.SPAN_CAPTCHA_ATTRIBUTE_ID ).style.backgroundColor = MDB.CAPTCHA.Constants.UNMATCH_BACKGROUND_COLOR;
-		document.getElementById( MDB.CAPTCHA.Constants.SPAN_ERROR_ATTRIBUTE_ID ).innerHTML = MDB.CAPTCHA.Variables.errorText;
-		document.getElementById( MDB.CAPTCHA.Constants.SPAN_ERROR_ATTRIBUTE_ID ).style.display = 'block';
+		MDB.CAPTCHA.Variables.captchaSpan.style.backgroundColor = MDB.CAPTCHA.Constants.UNMATCH_BACKGROUND_COLOR;
+		MDB.CAPTCHA.Variables.captchaErrorSpan.innerHTML = MDB.CAPTCHA.Variables.errorText;
+		MDB.CAPTCHA.Variables.captchaErrorSpan.style.display = 'block';
 		return false;
 	}
 	else
 	{
-		document.getElementById( MDB.CAPTCHA.Constants.SPAN_CAPTCHA_ATTRIBUTE_ID ).style.backgroundColor = MDB.CAPTCHA.Constants.MATCH_BACKGROUND_COLOR;
-		document.getElementById( MDB.CAPTCHA.Constants.SPAN_ERROR_ATTRIBUTE_ID ).style.display = 'none';
-		document.getElementById( MDB.CAPTCHA.Constants.SPAN_ERROR_ATTRIBUTE_ID ).innerHTML = '';
+		MDB.CAPTCHA.Variables.captchaSpan.style.backgroundColor = MDB.CAPTCHA.Constants.MATCH_BACKGROUND_COLOR;
+		MDB.CAPTCHA.Variables.captchaErrorSpan.style.display = 'none';
+		MDB.CAPTCHA.Variables.captchaErrorSpan.innerHTML = '';
 		return true;
 	}
 }; // End of validateForm.
@@ -118,7 +122,7 @@ MDB.CAPTCHA.Functions.validateForm = function(captchaForm) {
 //////////////////////////////////////////////////////////////////////
 MDB.CAPTCHA.Functions.validateCaptcha = function() {
 
-	var enteredValue = document.getElementById( MDB.CAPTCHA.Constants.TEXT_INPUT_ATTRIBUTE_ID ).value;
+	var enteredValue = MDB.CAPTCHA.Variables.captchaText.value;
 	
 	if ( MDB.CAPTCHA.Variables.captchaCode === enteredValue )
 	{
