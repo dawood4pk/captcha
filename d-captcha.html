@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    	<title>D Captcha by Dawood Butt.</title>
+        <link rel="stylesheet" href="css/d-captcha.css" />
+		<!--[if lt IE 9]>
+		<script>
+			document.createElement('header');
+			document.createElement('nav');
+			document.createElement('section');
+			document.createElement('article');
+			document.createElement('aside');
+			document.createElement('footer');
+		</script>
+		<![endif]-->
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+    <body>
+        <form id="captchaForm" name="captchaForm" action="d-captcha.html" method="post">
+            <span id="captchaContainer" ></span>
+            <input type="text" name="captchaInput" id="captchaInput" size="15" />
+            <input type="button" id="captchaRefresh" value="Refresh" />
+            <input type="submit" value="Submit"/>
+            <span id="errorContainer"></span>
+        </form>
+		<script src="js/d-captcha.js"></script>
+    </body>
+</html>
